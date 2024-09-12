@@ -30,6 +30,9 @@ class User(db.Model):
 def add_user():
     """adds user to users db"""
     user = request.get_json()
+    existing_emails = User.query.order_by(User.email).all()
+    if user['email'] in existing_emails:
+        return 'user already exists'
     new_user = User(username=user['username'], name=user['name'],
                 email=['email'], income=user['income'])
     db.session.add(new_user)
