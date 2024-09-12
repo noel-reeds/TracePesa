@@ -8,10 +8,47 @@ db = SQLAlchemy(app)
 
 
 class Expenses(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    """attributes of the expenses"""
+    id = db.Column(db.Integer, foreign_key=True)
     category = db.Column(db.String(50), nullable=False)
     name = db.Column(db.String(50), nullable=False)
     amount = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return "<Expense added %r>" % self.name
+        return "<Expense added to %r>" % self.category
+
+
+class User(db.Model):
+    """contains users of the API"""
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    income = db.Column(db.Integer, nullable=False)
+
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    """adds user to users db"""
+    user = request.get_json()
+    new_user = User(username=user['username'], name=user['name'],
+                email=['email'], income=user['income'])
+    db.session.add(new_user)
+    db.session.commit()
+    return 'registration successful'
+
+
+@app.route('/add_expense', methods=['POST'])
+def add_expenses():
+    """adds new expenses to the database"""
+    expense_data = request.get_json()
+    amount = expense_data['amount']
+    category = expense_data['category']
+    new_expense = Expenses(username=username,
+                category=category, name=name, amount=amount)
+    db.session.add(new_expense)
+    db.session.commit()
+    return 'new expense added'
+
+@app.route('/delete_expense', methods=['POST'])
+    def delete_expense():
+
