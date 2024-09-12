@@ -37,7 +37,7 @@ def add_user():
                 email=['email'], income=user['income'])
     db.session.add(new_user)
     db.session.commit()
-    return 'registration successful'
+    return 'Registration successful'
 
 
 @app.route('/add_expense', methods=['POST'])
@@ -50,8 +50,15 @@ def add_expenses():
                 category=category, name=name, amount=amount)
     db.session.add(new_expense)
     db.session.commit()
-    return 'new expense added'
+    return 'New expense added'
 
-@app.route('/delete_expense', methods=['POST'])
-    def delete_expense():
-
+@app.route('/delete_expense/<int:id>', methods=['POST'])
+    def delete_expense(id):
+        """deletes an expense from the expenses table"""
+        expense = Expenses.query.get_or_404(id)
+        try:
+            db.session.delete(expense)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an err'
