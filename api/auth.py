@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request
+from flask import flash, Blueprint, render_template, request
+from werkzeug.security import generate_password_hash, check_password_hash
 from . import db, User
 
 auth = Blueprint('auth', __name__)
@@ -10,19 +11,19 @@ def home_redirect():
 
 @auth.route('/login')
 def user_login():
-    """logs in a user into the app"""
+    """Logs in a user into the app"""
     return 'Login'
 
 
 
 @auth.route('/signup')
 def user_signup():
-    """signs up a user"""
+    """Signs up a user"""
     return render_template('signup.html')
 
 @auth.route('/signup', methods=['POST'])
 def signup():
-    """"adds a user to database"""
+    """"Adds a user to database"""
     username = request.form.get['username']
     name = request.form.get.get['name']
     password = request.form.get['password']
@@ -30,13 +31,14 @@ def signup():
 
     user = User.query.filter_by(email).first()
     if user:
+        flash("Email already exists, proceed to login")
         return redirect(url_for('auth.user_sign'))
 
-    new_user = User(username=username, name=name, email=email)
-    db.session.add(new_user)
+    new_user = User(username=username, name=name, email=email,
+            password=generate_password_hash(password, method='sha256'))
     db.session.commit()
     
-    """redirect user to login"""
+    """Redirect user to login"""
     return redirect(url_for('auth.user_login'))
 
 
