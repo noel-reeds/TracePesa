@@ -11,9 +11,13 @@ def fintrack_app():
     db.init_app(app)
 
     from .auth import auth as auth_blueprint
-    from .app import app as app_blueprint
+    from .main import main as main_blueprint
 
     app.register_blueprint(auth_blueprint)
-    app.register_blueprint(app_blueprint)
+    app.register_blueprint(main_blueprint)
 
     return app
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
