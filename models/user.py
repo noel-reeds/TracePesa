@@ -1,10 +1,6 @@
 from flask_login import UserMixin
 from models.base import Base
-import bicrypt
 
-class User(Base):
-    """class to define users"""
-    pass
 
 class User(UserMixin, db.Model):
     """contains users of the API"""
