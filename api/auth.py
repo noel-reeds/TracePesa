@@ -4,30 +4,42 @@ from . import db, User
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/')
-def home_redirect():
-    return 'HOME'
-
 
 @auth.route('/login')
 def user_login():
     """Logs in a user into the app"""
-    return 'Login'
+    return render_template('login.html')
 
 
+@auth.route('/login', methods=['POST'])
+def login():
+    """Redirects successful logins"""
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(email)..first()
+
+    """Check if user already exists, password check"""
+    if user and check_password_hash(user.password, password):
+        return redirect(url_for('main.profile'))
+    
+    """if check fails, return to login"""
+    flash('Failed, check your credentials and try again')
+    return redirect(url_for('auth.user_login')
 
 @auth.route('/signup')
 def user_signup():
     """Signs up a user"""
     return render_template('signup.html')
 
+
 @auth.route('/signup', methods=['POST'])
 def signup():
     """"Adds a user to database"""
-    username = request.form.get['username']
-    name = request.form.get.get['name']
-    password = request.form.get['password']
-    email = request.form.get['email']
+    username = request.form.get('username')
+    name = request.form.get.get('name')
+    password = request.form.get('password')
+    email = request.form.get('email')
 
     user = User.query.filter_by(email).first()
     if user:
