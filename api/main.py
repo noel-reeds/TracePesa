@@ -1,15 +1,17 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
+from flask_login import login_required, current_user
 
 
-home = Blueprint('main', __name__)
+main = Blueprint('main', __name__)
 
-@home.route('/')
+@main.route('/')
 def index():
     """Returns index page"""
     return 'Index'
 
 
-@home.route('/profile')
+@main.route('/profile')
+@login_required
 def profile():
     """Returns a logged in user"""
-    return 'Profile'
+    return render_template('profile.html', name=current_user.name)
