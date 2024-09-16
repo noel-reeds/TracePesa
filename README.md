@@ -2,7 +2,7 @@
 A simple API to fastrack users expenditure.  
 
 
-![https://imgur.com/a/GuelgI7]  
+![fintrack logo](https://i.imgur.com/I3m75vU.png)  
 
 
 
