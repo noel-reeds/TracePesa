@@ -1,5 +1,6 @@
 # FINTRACK API.  
 A simple API to fastrack users expenditure.  
+*backend only ~ to visualize soooooon*
 
 
 ![fintrack logo](https://i.imgur.com/I3m75vU.png)  
