@@ -25,4 +25,13 @@ def add_expense():
 @expense.route('expense/remove/int:expense_id>', methods=['POST'])
 def remove_expense(expense_id):
     """Deletes an expense from database"""
-    expense = 
+    expense = Expense.query.get_or_404(expense_id)
+    
+    try:
+        db.session.delete(expense)
+        db.session.commit()
+        return jsonify({'message': 'Expense deleted successfully'})
+
+    except:
+        return jsonify({'message': 'Expense does not exist'})
+
