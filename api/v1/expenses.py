@@ -35,3 +35,13 @@ def remove_expense(expense_id):
     except:
         return jsonify({'message': 'Expense does not exist'})
 
+@expense.route('expense/get_expenses/<int:user_id>', methods=['GET'])
+def get_expenses(user_id):
+    """returns all expenses of a user"""
+    expenses = Expense.query.filter_by(user_id).all()
+    
+    try:
+        return jsonify({expense.expense_to_dict() for expense in expenses})
+
+    except:
+        return jsonify({'message': 'No expenses for the user, add some!'})
