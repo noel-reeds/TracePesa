@@ -45,3 +45,19 @@ def get_expenses(user_id):
 
     except:
         return jsonify({'message': 'No expenses for the user, add some!'})
+
+
+@expense.route('expense/update/<int:expense_id>', methods=['PUT'])
+def update_expense(expense_id):
+    """Updates a user expenditure"""
+    expense = Expense.query.get_or_404(expense_id)
+    try:
+        expense_info = request.get_json()
+        expense.amount = expense_info.get('amount')
+        expense.name = expense_info.get('name')
+        expense.desc = expense_info.get('desc')
+        expense.date = datetime.strptime(expense_info.get('date'), '%Y-%m-%d')
+
+        db.session.commit()
+    except:
+        return jsonify({'message': 'Error occured updating expenditure'})
