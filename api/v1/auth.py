@@ -1,7 +1,7 @@
 from flask import flash, Blueprint, render_template, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
-from . import db, User
+from models import User, db
 
 
 auth = Blueprint('auth', __name__)
@@ -28,7 +28,7 @@ def login():
     
     """if check fails, return to login"""
     flash('Failed, check your credentials and try again')
-    return redirect(url_for('auth.user_login')
+    return redirect(url_for('auth.user_login'))
 
 @auth.route('/signup')
 def user_signup():
