@@ -1,5 +1,4 @@
-from app import db
-
+from . import db
 
 class User(db.Model):
     """User model, defines a user and attrs"""
