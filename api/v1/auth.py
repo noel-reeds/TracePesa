@@ -19,7 +19,7 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    user = User.query.filter_by(email)..first()
+    user = User.query.filter_by(email).first()
 
     """Check if user already exists, password check"""
     if user and check_password_hash(user.password, password):
