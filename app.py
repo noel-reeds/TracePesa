@@ -1,9 +1,6 @@
 from flask import Flask
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-
-
-db = SQLAlchemy()
+from models import db
 
 
 def fintrack_app():
@@ -22,15 +19,14 @@ def fintrack_app():
         return User.query.get(int(user_id))
 
     from api.v1.auth import auth as auth_blueprint
-    from .main import main as main_blueprint
-    from models.user import expenditure as expenditure
+    from api.v1.main import main as main_blueprint
 
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(expenditure)
 
     return app
 
 
 if __name__ == "__main__":
-    fintrack_app()
+    app = fintrack_app()
+    app.run(debug=True)
