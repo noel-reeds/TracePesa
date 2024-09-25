@@ -1,4 +1,4 @@
-from flask import flash, Blueprint, render_template, request
+from flask import flash, Blueprint, render_template, request, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from models import User, db
@@ -16,8 +16,9 @@ def user_login():
 @auth.route('/login', methods=['POST'])
 def login():
     """Redirects successful logins"""
-    email = request.form.get('email')
-    password = request.form.get('password')
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
 
     user = User.query.filter_by(email).first()
 
@@ -39,10 +40,11 @@ def user_signup():
 @auth.route('/api/v1/signup', methods=['POST'])
 def signup():
     """"Adds a user to database"""
-    username = request.form.get('username')
-    name = request.form.get('name')
-    password = request.form.get('password')
-    email = request.form.get('email')
+    data = request.json
+    username = data.get('username')
+    name = data.get('name')
+    password = data.get('password')
+    email = data.get('email')
 
     user = User.query.filter_by(email=email).first()
     if user:
@@ -50,7 +52,7 @@ def signup():
         return redirect(url_for('auth.user_sign'))
 
     new_user = User(username=username, name=name, email=email,
-            password=generate_password_hash(password, method='sha256'))
+            password=generate_password_hash(password, method='pbkdf2:sha256'))
     db.session.add(new_user)
     db.session.commit()
     
