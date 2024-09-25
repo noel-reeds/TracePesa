@@ -20,7 +20,7 @@ $ API_HOST=0.0.0.0 API_PORT=5000 flask run
 
 ## ROUTES  
 
-- `POST /api/v1/signup`: creates a new user with specified params.  
+- `POST /api/v1/signup`: creates a new user with specified params(email, password, username, name).  
 - `POST /api/v1/expense/add`: adds a user expenditure.  
 - `DELETE /api/v1/expense/remove/int:expense_id>`: deletes an expenditure.
 - `GET /api/v1/expense/get_expenses/<int:user_id>`: returns all expenses.
