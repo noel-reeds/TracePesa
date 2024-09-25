@@ -1,10 +1,12 @@
 from flask import Flask
+import os
 from flask_login import LoginManager
 from models import db
 
 
 def fintrack_app():
     app = Flask(__name__)
+    app.config['SECRET_KEY'] = os.urandom(24)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fintrack_db.sqlite'
     db.init_app(app)
