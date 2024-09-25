@@ -36,15 +36,15 @@ def user_signup():
     return render_template('signup.html')
 
 
-@auth.route('/signup', methods=['POST'])
+@auth.route('/api/v1/signup', methods=['POST'])
 def signup():
     """"Adds a user to database"""
     username = request.form.get('username')
-    name = request.form.get.get('name')
+    name = request.form.get('name')
     password = request.form.get('password')
     email = request.form.get('email')
 
-    user = User.query.filter_by(email).first()
+    user = User.query.filter_by(email=email).first()
     if user:
         flash("Email already exists, proceed to login")
         return redirect(url_for('auth.user_sign'))

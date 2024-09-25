@@ -1,4 +1,4 @@
-from app import db
+from models import db
 from datetime import datetime
 
 
@@ -7,13 +7,13 @@ class Expense(db.Model):
 
     __tablename__ = 'expenses'
 
-    id = db.Column(db.Integer(50), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user_id'), nullable=False)
     category = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(50), nullable=False)
-    amount = db.Column(db.Integer(50), nullable=False)
-    date = db.Column(db.datetime, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     
     def expense_to_dict(self):
         """Returns a dictionary of the expense"""
