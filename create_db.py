@@ -2,6 +2,7 @@
 
 from models import db
 from app import fintrack_app
+from models import Expense
 
 app = fintrack_app()
 
