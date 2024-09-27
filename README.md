@@ -15,7 +15,7 @@ $ pip3 install -r requirements.txt
 ## RUN  
 
 ```
-$ API_HOST=0.0.0.0 API_PORT=5000 flask run  
+$ API_HOST=0.0.0.0 API_PORT=5000 python app.py  
 ```
 
 ## ROUTES  
