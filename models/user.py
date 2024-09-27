@@ -12,4 +12,5 @@ class User(db.Model):
     password = db.Column(db.String(128), nullable=False)
 
     # establish a relation between the user and expense table
-    return '<user {}>'.format(self.username)
+    def __repr__(self):
+        return '<user {}>'.format(self.username)
