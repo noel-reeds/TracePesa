@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, request, jsonify
 from models.expense import Expense
 from app import db
-from datetime import datetime
+from datetime import datetime, date
 
 expense = Blueprint('expense', __name__)
 
@@ -10,13 +10,14 @@ def add_expense():
     """Adds an expenditure to the database"""
     expense_info = request.json
     category = expense_info.get('category')
+    user_id = expense_info.get('user_id')
     desc = expense_info.get('desc')
     name = expense_info.get('name')
     amount = expense_info.get('amount')
-    date = datetime.strptime(datetime.utcnow(), '%Y-%m-%d')
+    current_date = date.today()
 
     new_expense = Expense(user_id=user_id, category=category, desc=desc,
-            name=name, amount=amount, date=date)
+            name=name, amount=amount, date=current_date)
     db.session.add(new_expense)
     db.session.commit()
     return jsonify({'message': 'Expense added successfully'})
