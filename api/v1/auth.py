@@ -1,4 +1,4 @@
-from flask import flash, Blueprint, render_template, request, redirect, url_for
+from flask import flash, Blueprint, render_template, request, redirect, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from models import User, db
@@ -48,8 +48,8 @@ def signup():
 
     user = User.query.filter_by(email=email).first()
     if user:
-        flash("Email already exists, proceed to login")
-        return redirect(url_for('auth.user_signup'))
+        return jsonify({"message": "user already exists"})
+        # redirect(url_for('auth.user_login'))
 
     new_user = User(username=username, name=name, email=email,
             password=generate_password_hash(password, method='pbkdf2:sha256'))
@@ -57,7 +57,7 @@ def signup():
     db.session.commit()
     
     """Redirect user to login"""
-    return redirect(url_for('auth.user_login'))
+    return redirect(url_for('main.profile'))
 
 
 @auth.route('/logout')
