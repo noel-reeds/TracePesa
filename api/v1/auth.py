@@ -60,9 +60,34 @@ def signup():
     return redirect(url_for('main.profile'))
 
 
-@auth.route('/logout')
+@auth.route('/api/v1/logout')
 @login_required
 def user_logout():
     """Logs out a user"""
     logout_user()
     return redirect(url_for('main.index'))
+
+
+@auth.route('/api/v1/update_user', methods=['POST'])
+@login_required
+def update_user():
+    """updates user info"""
+    pass
+
+@auth.route('/api/v1/reset_password', methods=['PUT'])
+def reset_password():
+    """Resets user password"""
+    password_info = request.json
+    email = password_info.get('email')
+    password = password_info.get('password')
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        hash_password = generate_password_hash(password, method='pbkdf2:sha256')
+        if check_password_hash(user.password, password):
+            return jsonify({'message': 'provide a newer password'})
+        user.password = hash_password
+        return jsonify({'message': 'password reset success'})
+
+    redirect(url_for('auth.user_signup'))
+    return jsonify({'message': 'email does not exist, register to proceed'})
