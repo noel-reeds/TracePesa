@@ -7,20 +7,20 @@ from models import User, db
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login')
+@auth.route('/api/v1/login')
 def user_login():
     """Logs in a user into the app"""
     return render_template('login.html')
 
 
-@auth.route('/login', methods=['POST'])
+@auth.route('/api/v1/login', methods=['POST'])
 def login():
     """Redirects successful logins"""
     data = request.json
     email = data.get('email')
     password = data.get('password')
 
-    user = User.query.filter_by(email).first()
+    user = User.query.filter_by(email=email).first()
 
     """Check if user already exists, password check"""
     if user and check_password_hash(user.password, password):
@@ -48,8 +48,8 @@ def signup():
 
     user = User.query.filter_by(email=email).first()
     if user:
-        return jsonify({"message": "user already exists"})
-        # redirect(url_for('auth.user_login'))
+        redirect(url_for('auth.user_login'))
+        return jsonify({'message': 'user already exists'})
 
     new_user = User(username=username, name=name, email=email,
             password=generate_password_hash(password, method='pbkdf2:sha256'))
