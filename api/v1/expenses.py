@@ -20,7 +20,7 @@ def add_expense():
             name=name, amount=amount, date=current_date)
     db.session.add(new_expense)
     db.session.commit()
-    return jsonify({'message': 'Expense added successfully'})
+    return jsonify({'message': 'expense added successfully'})
 
 
 @expense.route('/expense/remove/int:expense_id>', methods=['POST'])
@@ -39,13 +39,10 @@ def remove_expense(expense_id):
 @expense.route('/expense/get_expenses/<int:user_id>', methods=['GET'])
 def get_expenses(user_id):
     """returns all expenses of a user"""
-    expenses = Expense.query.filter_by(user_id).all()
-    
-    try:
-        return jsonify({expense.expense_to_dict() for expense in expenses})
-
-    except:
-        return jsonify({'message': 'No expenses for the user, add some!'})
+    expenses = Expense.query.filter_by(user_id=user_id).all()
+    if expenses:
+        return jsonify([expense.to_dict() for expense in expenses])
+    return jsonify({'message': 'no expenses for this period'})
 
 
 @expense.route('/expense/update/<int:expense_id>', methods=['PUT'])
