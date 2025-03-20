@@ -22,11 +22,11 @@ def fintrack_app():
 
     from api.v1.auth import auth as auth_blueprint
     from api.v1.expenses import expense as expense_blueprint
-    from api.v1.main import main as main_blueprint
+    from api.v1.users import user as users_blueprint
 
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(expense_blueprint)
-    app.register_blueprint(main_blueprint)
+    app.register_blueprint(users_blueprint)
 
     return app
 
