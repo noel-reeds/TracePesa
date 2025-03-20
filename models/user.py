@@ -15,4 +15,9 @@ class User(db.Model):
     expenses = db.relationship('Expense', backref='user', lazy='dynamic')
 
     def __repr__(self):
-        return '<user {}>'.format(self.username)
+        """prints a user object"""
+        return '{} - {}'.format(self.name, self.email)
+    
+    def to_dict(self):
+        """converts user object into a serializable object"""
+        return dict(id=self.id,name=self.name,email=self.email)
