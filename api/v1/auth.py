@@ -19,7 +19,6 @@ def login():
     data = request.json
     email = data.get('email')
     password = data.get('password')
-
     user = User.query.filter_by(email=email).first()
 
     """Check if user already exists, password check"""
@@ -48,17 +47,20 @@ def signup():
 
     user = User.query.filter_by(email=email).first()
     if user:
+        """
         redirect(url_for('auth.user_login'))
+        """
         return jsonify({'message': 'user already exists'})
 
     new_user = User(username=username, name=name, email=email,
             password=generate_password_hash(password, method='pbkdf2:sha256'))
     db.session.add(new_user)
     db.session.commit()
+    return jsonify({'message': 'user added success'})
     
-    """Redirect user to login"""
+    """Redirect user to login
     return redirect(url_for('main.profile'))
-
+    """
 
 @auth.route('/api/v1/logout')
 @login_required
