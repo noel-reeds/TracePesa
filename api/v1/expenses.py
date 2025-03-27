@@ -26,16 +26,13 @@ def add_expense(user_id):
     return jsonify({'message': 'expense add success'})
 
 
-@expense.route('/api/v1/expense/remove/<int:expense_id>', methods=['POST'])
-def remove_expense(expense_id):
+@expense.route('/api/v1/expense/remove/<expense_id>', methods=['DELETE'])
+def delete_expense(expense_id):
     """Deletes an expense from database"""
-    req_data = request.json
-    user_id = req_data.get('user_id')
-    expense = Expense.query.filter_by(id=expense_id, user_id=user_id).all()
+    expense = Expense.query.filter_by(id=expense_id).first()
     #check if expense exists
     if expense:
-        for obj in expense:
-            db.session.delete(obj)
+        db.session.delete(expense)
         db.session.commit()
         return jsonify({'message': 'expense delete success'})
     return jsonify({'message': 'expense does not exist'})
