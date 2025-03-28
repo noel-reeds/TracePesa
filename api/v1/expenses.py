@@ -71,6 +71,6 @@ def ret_expense(expense_id):
     if expense is None:
         return jsonify({"message": "expenditure does not exists"})
     try:
-        return jsonify(expense.to_dict())
+        return jsonify({"expense": expense.to_dict()})
     except Exception as err:
         return jsonify({"error": "{}".format(err)})
