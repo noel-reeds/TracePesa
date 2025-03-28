@@ -26,7 +26,7 @@ def add_expense(user_id):
     return jsonify({'message': 'expense add success'})
 
 
-@expense.route('/api/v1/expense/remove/<expense_id>', methods=['DELETE'])
+@expense.route('/api/v1/expense/remove/<uuid:expense_id>', methods=['DELETE'])
 def delete_expense(expense_id):
     """Deletes an expense from database"""
     expense = Expense.query.filter_by(id=expense_id).first()
@@ -44,7 +44,7 @@ def expenses(user_id):
         return jsonify({'message': 'user does not exist'})
     expenses = Expense.query.filter_by(user_id=user_id).all()
     if expenses:
-        return jsonify([expense.to_dict() for expense in expenses])
+        return jsonify({"expenses": [expense.to_dict() for expense in expenses]})
     return jsonify({'message': 'no expenses for this period'})
 
 
