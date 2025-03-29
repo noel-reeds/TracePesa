@@ -36,5 +36,6 @@ class Expense(db.Model):
     def to_dict(self):
         """Returns a dictionary of the expense"""
         return dict(id=self.id,category=self.category,\
-                    desc=self.desc,name=self.name,amount=self.amount,\
+                    user_id=self.user_id,desc=self.desc,\
+                    name=self.name,amount=self.amount,\
                     date=self.date.isoformat())

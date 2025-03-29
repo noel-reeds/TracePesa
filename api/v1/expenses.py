@@ -1,10 +1,23 @@
-from flask import Flask, Blueprint, request, jsonify
+from flask import Flask, Blueprint, request, url_for, jsonify
+from flask import jsonify as js
 from models.expense import Expense
 from models.user import User
 from app import db
 from datetime import datetime, date
 
 expense = Blueprint('expense', __name__)
+
+def uri_for(expense):
+    """Replaces expense id for a uri"""
+    new = {}
+    for key in expense.keys():
+        if key == 'user_id':
+            # replace id attr with uri
+            new['uri'] = url_for('expense.user_expenses', user_id=expense['user_id'], _external=True)
+        else:
+            new[key] = expense[key]
+    return new
+
 
 @expense.route('/api/v1/expense/add/<int:user_id>', methods=['POST'])
 def add_expense(user_id):
@@ -38,13 +51,14 @@ def delete_expense(expense_id):
     return jsonify({'message': 'expense does not exist'})
 
 @expense.route('/api/v1/expenses/<int:user_id>', methods=['GET'])
-def expenses(user_id):
+def user_expenses(user_id):
     """Returns all expenses of a user"""
     if not User.query.filter_by(id=user_id).first():
         return jsonify({'message': 'user does not exist'})
     expenses = Expense.query.filter_by(user_id=user_id).all()
     if expenses:
-        return jsonify({"expenses": [expense.to_dict() for expense in expenses]})
+        # uri method drops id attr and adds URI
+        return js({"expenses": [uri_for(expense.to_dict()) for expense in expenses]})
     return jsonify({'message': 'no expenses for this period'})
 
 
