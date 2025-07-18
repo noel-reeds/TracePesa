@@ -1,6 +1,10 @@
 # TracePesa API.  
 A simple budgeting API to fastrack users expenditure.  
 Fintrack API aims to log users' expenditures from various payments platforms.  
+  
+For a start, we're making it possible to trace expenditures logged on Mpesa  
+- Lipa na Mpesa options of:
+- Till Number & Paybill
 
 
 ![fintrack logo](https://i.imgur.com/I3m75vU.png)  
