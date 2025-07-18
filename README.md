@@ -6,7 +6,8 @@ For a start, we're making it possible to trace expenditures logged on Mpesa
 - Lipa na Mpesa options of:
 - Till Number & Paybill
 
-
+Next, we'll look into the various mobile wallets and maybe trace crypto.  
+  
 ![fintrack logo](https://i.imgur.com/I3m75vU.png)  
 
 
