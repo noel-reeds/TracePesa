@@ -1,4 +1,5 @@
 # TracePesa API.  
+## Every cent matters!
 A simple budgeting tool to fastrack users expenditure.  
 TracePesa aims to log users' expenditures from various payments platforms.  
   
