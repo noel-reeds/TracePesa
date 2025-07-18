@@ -1,4 +1,4 @@
-# FINTRACK API.  
+# TracePesa API.  
 A simple budgeting API to fastrack users expenditure.  
 Fintrack API aims to log users' expenditures from various payments platforms.  
 
