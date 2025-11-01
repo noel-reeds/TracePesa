@@ -1,3 +1,4 @@
+.trace-cash/
 # ignore env variables
 .fintrack/
 *.venv
